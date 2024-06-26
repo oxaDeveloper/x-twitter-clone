@@ -92,13 +92,13 @@ const Leftbar = ({ session }: { session: any }) => {
             <span className="px-4 text-[22px]">More</span>
           </div>
 
-          <div className="mt-2 rounded-full bg-[#0096f4] py-3">
+          <div className="mt-2 rounded-full bg-[#0096f4] py-3 cursor-pointer">
             <p className="kanit-regular text-center text-lg">Post</p>
           </div>
         </div>
       </div>
 
-      <div className="mb-3 flex cursor-pointer items-center gap-3 rounded-full px-2.5 py-2 hover:bg-[#171717]">
+      <div className="mb-4 flex cursor-pointer items-center gap-3 rounded-full px-2.5 py-2 hover:bg-[#171717]">
         <Image
           src={session.user.image}
           alt=""
