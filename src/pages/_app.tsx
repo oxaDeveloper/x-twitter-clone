@@ -25,7 +25,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       </Head>
 
       <main className={GeistSans.className}>
-        {session ? <Component {...pageProps} /> : <SignIn />}
+        {session ? <Component {...pageProps} session={session} /> : <SignIn />}
       </main>
     </>
   );
