@@ -14,8 +14,7 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
 const Leftbar = ({ session }: { session: any }) => {
-  const email = "sukhrobisrailzadeh@gmail.com";
-  const username = email.split("@")[0];
+  const username = session.user.email.split("@")[0];
 
   return (
     <div className="flex min-h-screen flex-col justify-between">
@@ -92,7 +91,7 @@ const Leftbar = ({ session }: { session: any }) => {
             <span className="px-4 text-[22px]">More</span>
           </div>
 
-          <div className="mt-2 rounded-full bg-[#0096f4] py-3 cursor-pointer">
+          <div className="mt-2 cursor-pointer rounded-full bg-[#0096f4] py-3">
             <p className="kanit-regular text-center text-lg">Post</p>
           </div>
         </div>

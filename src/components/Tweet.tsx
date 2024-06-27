@@ -1,5 +1,6 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import { formatDistanceToNow, parseISO } from "date-fns";
 // Icons
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
@@ -8,14 +9,37 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import IosShareOutlinedIcon from "@mui/icons-material/IosShareOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import axios from "axios";
 
-const Post = () => {
+const Tweet = ({
+  user,
+  id,
+  image,
+  tweet,
+  createdAt,
+  fetchTweets,
+}: {
+  user: any;
+  id: string;
+  image: string;
+  tweet: string;
+  createdAt: string;
+  fetchTweets: Function;
+}) => {
+  const [more, setMore] = useState(false);
+  const username = user.email.split("@")[0];
+
+  const deleteTweet = async () => {
+    await axios.delete(`/api/tweet?id=${id}`).then(() => fetchTweets());
+  };
+
   return (
     <div className="border-b border-[#383838] p-4 pb-1">
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-2">
           <Image
-            src="https://yt3.googleusercontent.com/WwX1G6HXgGi4A7MUbHroRtxH3DdISGCzl9eQnb8Nh98mIgoNP6Y-ASYUsBhdcjbqZu0AtK-W=s900-c-k-c0x00ffffff-no-rj"
+            src={user.image}
             alt=""
             width={40}
             height={40}
@@ -24,35 +48,54 @@ const Post = () => {
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="kanit-regular text-lg">FC Barcelona</h1>
+              <h1 className="kanit-regular text-nowrap text-lg">{user.name}</h1>
               <p className=" text-gray-500">
-                @fcbarcelona <span> · 19h</span>
+                @{username}{" "}
+                <span> · {formatDistanceToNow(parseISO(createdAt))}</span>
               </p>
             </div>
 
-            <p className="text-base leading-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
-              voluptas!
-            </p>
+            <p className="text-base leading-4">{tweet}</p>
           </div>
         </div>
 
-        <div className="cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-10">
+        <div
+          className="relative cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-10"
+          onClick={() => setMore((more) => !more)}
+        >
           <MoreHorizIcon
             sx={{ ":hover": { color: "#0096f4" }, color: "#6b7280" }}
           />
+
+          {more && (
+            <div className="absolute bottom-[-2.5rem] right-0 flex items-center gap-2 rounded-lg border border-[#383838] bg-black">
+              <div
+                className="flex cursor-pointer items-center gap-2 px-4 py-2 hover:bg-red-500 hover:bg-opacity-10"
+                onClick={deleteTweet}
+              >
+                <DeleteOutlineOutlinedIcon
+                  sx={{ color: "red", fontSize: 22 }}
+                />
+                <span className="text-nowrap text-[15px] leading-[0px] text-red-500">
+                  Delete tweet
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="mt-4 w-full px-12">
-        <Image
-          src="https://assets.goal.com/images/v3/blte4136512c4eba7e9/GOAL_-_Blank_WEB_-_Facebook_-_2023-10-06T143531.895.png?auto=webp&format=pjpg&width=3840&quality=60"
-          alt=""
-          width={1080}
-          height={1080}
-          className="h-full w-full rounded-2xl border border-[#383838] object-cover"
-        />
-      </div>
+      {image && (
+        <div className="mt-4 w-full px-12">
+          <Image
+            src={image}
+            alt=""
+            width={1080}
+            height={1080}
+            className="h-full w-full rounded-2xl border border-[#383838] object-cover"
+          />
+        </div>
+      )}
 
       <div className="mt-1 flex w-full justify-between">
         <div className="flex w-full items-center justify-between pl-10 pr-20">
@@ -123,4 +166,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default Tweet;
