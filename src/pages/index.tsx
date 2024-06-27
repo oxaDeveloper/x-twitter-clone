@@ -10,7 +10,7 @@ export default function Home({ session }: { session: any }) {
       </div>
 
       <div className="ml-10 mr-8 flex-1 border-x border-[#383838]">
-        <Main />
+        <Main session={session} />
       </div>
 
       <div className="w-[22rem]">

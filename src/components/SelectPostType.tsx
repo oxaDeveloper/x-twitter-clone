@@ -8,7 +8,9 @@ const SelectPostType = () => {
         <div className="absolute bottom-0 h-1 w-14 rounded-full bg-[#0096f4]" />
       </div>
       <div className="flex w-full flex-1 cursor-pointer justify-center py-4 hover:bg-[#171717]">
-        <span className="kanit-regular text-center text-base">Following</span>
+        <span className="kanit-regular text-center text-base text-[#6f6f6f]">
+          Following
+        </span>
       </div>
     </div>
   );
