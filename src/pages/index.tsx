@@ -9,7 +9,7 @@ export default function Home({ session }: { session: any }) {
         <Leftbar session={session} />
       </div>
 
-      <div className="ml-10 mr-8 flex-1 border-x border-[#383838]">
+      <div className="ml-10 mr-8 max-h-screen flex-1 overflow-y-auto border-x border-[#383838]">
         <Main session={session} />
       </div>
 

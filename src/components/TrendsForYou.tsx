@@ -14,7 +14,7 @@ const TrendsForYou = () => {
           <h1 className="kanit-regular text-xl">#uzbekistan</h1>
         </div>
 
-        <div className="cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-30">
+        <div className="cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-10">
           <MoreHorizIcon sx={{ ":hover": { color: "#0096f4" } }} />
         </div>
       </div>
@@ -27,7 +27,7 @@ const TrendsForYou = () => {
           <h1 className="kanit-regular text-xl">#finance</h1>
         </div>
 
-        <div className="cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-30">
+        <div className="cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-10">
           <MoreHorizIcon sx={{ ":hover": { color: "#0096f4" } }} />
         </div>
       </div>

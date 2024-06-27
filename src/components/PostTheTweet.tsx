@@ -12,7 +12,7 @@ const PostTheTweet = ({ session }: { session: any }) => {
   const [tweetText, setTweetText] = useState("");
 
   return (
-    <div className="flex items-start gap-2 border-b border-[#383838] p-4">
+    <div className="flex items-start gap-2 border-b border-[#383838] p-4 pb-2.5">
       <Image
         src={session.user.image}
         alt=""
