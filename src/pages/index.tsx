@@ -1,4 +1,5 @@
 import Leftbar from "~/components/Leftbar";
+import Main from "~/components/Main";
 import RightPart from "~/components/RightPart";
 
 export default function Home({ session }: { session: any }) {
@@ -8,7 +9,9 @@ export default function Home({ session }: { session: any }) {
         <Leftbar session={session} />
       </div>
 
-      <div className="ml-10 mr-8 flex-1 border-x border-[#383838]"></div>
+      <div className="ml-10 mr-8 flex-1 border-x border-[#383838]">
+        <Main />
+      </div>
 
       <div className="w-[22rem]">
         <RightPart />
