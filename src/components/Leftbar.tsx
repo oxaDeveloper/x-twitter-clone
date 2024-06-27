@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { signOut } from "next-auth/react";
+import axios from "axios";
 // Icons
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,8 +15,37 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-const Leftbar = ({ session }: { session: any }) => {
+const Leftbar = ({
+  premium,
+  session,
+  fetchUserPremium,
+  fetchTweets,
+}: {
+  premium: boolean;
+  session: any;
+  fetchUserPremium: Function;
+  fetchTweets: Function;
+}) => {
   const username = session.user.email.split("@")[0];
+
+  const getPremium = async () => {
+    if (
+      confirm(
+        premium
+          ? "Do you want to cancel your Premium Subscription?"
+          : "Do you want to Subscribe To Premium?",
+      )
+    ) {
+      await axios
+        .put(`/api/getUserPremium?userId=${session.user.id}`, {
+          premium: !premium,
+        })
+        .then(() => {
+          fetchUserPremium();
+          fetchTweets();
+        });
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col justify-between">
@@ -72,7 +102,10 @@ const Leftbar = ({ session }: { session: any }) => {
             <span className="px-4 text-[22px]">Communities</span>
           </div>
 
-          <div className="flex w-fit cursor-pointer items-center rounded-full px-4 py-2 font-light hover:bg-[#171717]">
+          <div
+            className="flex w-fit cursor-pointer items-center rounded-full px-4 py-2 font-light hover:bg-[#171717]"
+            onClick={() => getPremium()}
+          >
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png"
               alt=""
@@ -111,7 +144,18 @@ const Leftbar = ({ session }: { session: any }) => {
         />
 
         <div>
-          <h1 className="kanit-regular text-nowrap">{session.user.name}</h1>
+          <div className="flex items-center gap-1">
+            <h1 className="kanit-regular text-nowrap">{session.user.name}</h1>
+            {premium && (
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/3/32/Verified-badge.png"
+                alt=""
+                width={15}
+                height={15}
+              />
+            )}
+          </div>
+
           <p className="text-sm text-gray-500">@{username}</p>
         </div>
       </div>

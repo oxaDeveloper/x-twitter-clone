@@ -2,26 +2,23 @@ import React, { useEffect, useState } from "react";
 import SelectPostType from "./SelectPostType";
 import PostTheTweet from "./PostTheTweet";
 import Tweet from "./Tweet";
-import axios from "axios";
 
-const Main = ({ session }: { session: any }) => {
-  const [tweets, setTweets] = useState([]);
-
-  const fetchTweets = async () => {
-    await axios.get("/api/tweet").then((res) => setTweets(res.data));
-  };
-
-  useEffect(() => {
-    fetchTweets();
-  }, []);
-
+const Main = ({
+  session,
+  tweets,
+  fetchTweets,
+}: {
+  session: any;
+  tweets: any;
+  fetchTweets: Function;
+}) => {
   return (
     <div>
       <SelectPostType />
       <PostTheTweet session={session} fetchTweets={fetchTweets} />
 
       <div className="flex flex-col">
-        {tweets?.map((tweet: any, idx) => (
+        {tweets?.map((tweet: any, idx: number) => (
           <Tweet
             key={idx}
             {...tweet}

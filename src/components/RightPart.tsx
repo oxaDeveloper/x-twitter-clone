@@ -4,11 +4,27 @@ import SubscribeToPremium from "./SubscribeToPremium";
 import TrendsForYou from "./TrendsForYou";
 import WhoToFollow from "./WhoToFollow";
 
-const RightPart = () => {
+const RightPart = ({
+  premium,
+  session,
+  fetchUserPremium,
+  fetchTweets,
+}: {
+  premium: boolean;
+  session: any;
+  fetchUserPremium: Function;
+  fetchTweets: Function;
+}) => {
   return (
     <div className="flex flex-col gap-4">
       <Search />
-      <SubscribeToPremium />
+      {!premium && (
+        <SubscribeToPremium
+          session={session}
+          fetchUserPremium={fetchUserPremium}
+          fetchTweets={fetchTweets}
+        />
+      )}
       <TrendsForYou />
       <WhoToFollow />
 

@@ -52,9 +52,20 @@ const Tweet = ({
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="kanit-regular text-nowrap text-lg hover:underline">
-                {user.name}
-              </h1>
+              <div className="flex items-center gap-1">
+                <h1 className="kanit-regular text-nowrap text-lg hover:underline">
+                  {user.name}
+                </h1>
+                {user.premium && (
+                  <Image
+                    src="https://upload.wikimedia.org/wikipedia/commons/3/32/Verified-badge.png"
+                    alt=""
+                    width={15}
+                    height={15}
+                  />
+                )}
+              </div>
+
               <p className=" text-gray-500">
                 @{username}{" "}
                 <span> · {formatDistanceToNow(parseISO(createdAt))}</span>
