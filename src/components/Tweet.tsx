@@ -14,6 +14,8 @@ import axios from "axios";
 
 const Tweet = ({
   user,
+  session,
+  userId,
   id,
   image,
   tweet,
@@ -21,6 +23,8 @@ const Tweet = ({
   fetchTweets,
 }: {
   user: any;
+  session: any;
+  userId: string;
   id: string;
   image: string;
   tweet: string;
@@ -35,7 +39,7 @@ const Tweet = ({
   };
 
   return (
-    <div className="border-b border-[#383838] p-4 pb-1">
+    <div className="cursor-pointer border-b border-[#383838] p-4 pb-1 hover:bg-[#171717]">
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-2">
           <Image
@@ -43,12 +47,14 @@ const Tweet = ({
             alt=""
             width={40}
             height={40}
-            className="cursor-pointer rounded-sm"
+            className="rounded-md"
           />
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="kanit-regular text-nowrap text-lg">{user.name}</h1>
+              <h1 className="kanit-regular text-nowrap text-lg hover:underline">
+                {user.name}
+              </h1>
               <p className=" text-gray-500">
                 @{username}{" "}
                 <span> · {formatDistanceToNow(parseISO(createdAt))}</span>
@@ -59,30 +65,32 @@ const Tweet = ({
           </div>
         </div>
 
-        <div
-          className="relative cursor-pointer rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-10"
-          onClick={() => setMore((more) => !more)}
-        >
-          <MoreHorizIcon
-            sx={{ ":hover": { color: "#0096f4" }, color: "#6b7280" }}
-          />
+        {userId === session.user.id && (
+          <div
+            className="relative rounded-full p-1 hover:bg-[#0096f4] hover:bg-opacity-10"
+            onClick={() => setMore((more) => !more)}
+          >
+            <MoreHorizIcon
+              sx={{ ":hover": { color: "#0096f4" }, color: "#6b7280" }}
+            />
 
-          {more && (
-            <div className="absolute bottom-[-2.5rem] right-0 flex items-center gap-2 rounded-lg border border-[#383838] bg-black">
-              <div
-                className="flex cursor-pointer items-center gap-2 px-4 py-2 hover:bg-red-500 hover:bg-opacity-10"
-                onClick={deleteTweet}
-              >
-                <DeleteOutlineOutlinedIcon
-                  sx={{ color: "red", fontSize: 22 }}
-                />
-                <span className="text-nowrap text-[15px] leading-[0px] text-red-500">
-                  Delete tweet
-                </span>
+            {more && (
+              <div className="absolute bottom-[-2.5rem] right-0 flex items-center gap-2 rounded-lg border border-[#383838] bg-black">
+                <div
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-red-500 hover:bg-opacity-10"
+                  onClick={deleteTweet}
+                >
+                  <DeleteOutlineOutlinedIcon
+                    sx={{ color: "red", fontSize: 22 }}
+                  />
+                  <span className="text-nowrap text-[15px] leading-[0px] text-red-500">
+                    Delete tweet
+                  </span>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
 
       {image && (
@@ -99,7 +107,7 @@ const Tweet = ({
 
       <div className="mt-1 flex w-full justify-between">
         <div className="flex w-full items-center justify-between pl-10 pr-20">
-          <div className="cursor-pointer rounded-full px-[7px] py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
+          <div className="rounded-full px-[7px] py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
             <ChatBubbleOutlineOutlinedIcon
               sx={{
                 ":hover": { color: "#0096f4" },
@@ -109,7 +117,7 @@ const Tweet = ({
             />
           </div>
 
-          <div className="cursor-pointer rounded-full px-1.5 py-1 hover:bg-[#31f400] hover:bg-opacity-10">
+          <div className="rounded-full px-1.5 py-1 hover:bg-[#31f400] hover:bg-opacity-10">
             <RepeatOutlinedIcon
               sx={{
                 ":hover": { color: "#31f400" },
@@ -119,7 +127,7 @@ const Tweet = ({
             />
           </div>
 
-          <div className="cursor-pointer rounded-full px-1.5 py-1 hover:bg-[#f400ab] hover:bg-opacity-10">
+          <div className="rounded-full px-1.5 py-1 hover:bg-[#f400ab] hover:bg-opacity-10">
             <FavoriteBorderOutlinedIcon
               sx={{
                 ":hover": { color: "#f400ab" },
@@ -129,7 +137,7 @@ const Tweet = ({
             />
           </div>
 
-          <div className="cursor-pointer rounded-full px-1.5 py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
+          <div className="rounded-full px-1.5 py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
             <BarChartOutlinedIcon
               sx={{
                 ":hover": { color: "#0096f4" },
@@ -141,7 +149,7 @@ const Tweet = ({
         </div>
 
         <div className="flex items-center">
-          <div className="cursor-pointer rounded-full px-1.5 py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
+          <div className="rounded-full px-1.5 py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
             <BookmarkBorderOutlinedIcon
               sx={{
                 ":hover": { color: "#0096f4" },
@@ -151,7 +159,7 @@ const Tweet = ({
             />
           </div>
 
-          <div className="cursor-pointer rounded-full px-1.5 py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
+          <div className="rounded-full px-1.5 py-1 hover:bg-[#0096f4] hover:bg-opacity-10">
             <IosShareOutlinedIcon
               sx={{
                 ":hover": { color: "#0096f4" },

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { signOut } from "next-auth/react";
 // Icons
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -97,7 +98,10 @@ const Leftbar = ({ session }: { session: any }) => {
         </div>
       </div>
 
-      <div className="mb-4 flex cursor-pointer items-center gap-3 rounded-full px-2.5 py-2 hover:bg-[#171717]">
+      <div
+        className="mb-4 flex cursor-pointer items-center gap-3 rounded-full px-2.5 py-2 hover:bg-[#171717]"
+        onClick={() => signOut()}
+      >
         <Image
           src={session.user.image}
           alt=""

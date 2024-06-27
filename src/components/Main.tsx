@@ -22,7 +22,12 @@ const Main = ({ session }: { session: any }) => {
 
       <div className="flex flex-col">
         {tweets?.map((tweet: any, idx) => (
-          <Tweet key={idx} {...tweet} fetchTweets={fetchTweets} />
+          <Tweet
+            key={idx}
+            {...tweet}
+            session={session}
+            fetchTweets={fetchTweets}
+          />
         ))}
       </div>
     </div>
