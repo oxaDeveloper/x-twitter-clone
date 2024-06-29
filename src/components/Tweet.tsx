@@ -33,6 +33,7 @@ const Tweet = ({
 }) => {
   const [more, setMore] = useState(false);
   const username = user.email.split("@")[0];
+  const time = formatDistanceToNow(parseISO(createdAt));
 
   const deleteTweet = async () => {
     await axios.delete(`/api/tweet?id=${id}`).then(() => fetchTweets());
@@ -68,7 +69,7 @@ const Tweet = ({
 
               <p className=" text-gray-500">
                 @{username}{" "}
-                <span> · {formatDistanceToNow(parseISO(createdAt))}</span>
+                {time !== "less than a minute" && <span> · {time}</span>}
               </p>
             </div>
 

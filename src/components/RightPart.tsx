@@ -26,7 +26,7 @@ const RightPart = ({
         />
       )}
       <TrendsForYou />
-      <WhoToFollow />
+      <WhoToFollow session={session} />
 
       <div className="flex flex-wrap gap-x-4 gap-y-0">
         <a href="#" className="text-sm text-gray-500 hover:underline">
