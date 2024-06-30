@@ -11,6 +11,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import IosShareOutlinedIcon from "@mui/icons-material/IosShareOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import axios from "axios";
+import Link from "next/link";
 
 const Tweet = ({
   user,
@@ -54,9 +55,11 @@ const Tweet = ({
           <div>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
-                <h1 className="kanit-regular text-nowrap text-lg hover:underline">
-                  {user.name}
-                </h1>
+                <Link href={`/${username}`}>
+                  <h1 className="kanit-regular text-nowrap text-lg hover:underline">
+                    {user.name}
+                  </h1>
+                </Link>
                 {user.premium && (
                   <Image
                     src="https://upload.wikimedia.org/wikipedia/commons/3/32/Verified-badge.png"

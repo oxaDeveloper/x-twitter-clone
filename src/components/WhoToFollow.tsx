@@ -1,5 +1,6 @@
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const WhoToFollow = ({ session }: { session: any }) => {
@@ -49,7 +50,10 @@ const WhoToFollow = ({ session }: { session: any }) => {
                 </div>
 
                 <div>
-                  <div className="flex items-center gap-1">
+                  <Link
+                    href={`/${username}`}
+                    className="flex items-center gap-1"
+                  >
                     <h1 className="text-base font-semibold hover:underline">
                       {user.name}
                     </h1>
@@ -62,7 +66,7 @@ const WhoToFollow = ({ session }: { session: any }) => {
                         className="mt-[-2px]"
                       />
                     )}
-                  </div>
+                  </Link>
 
                   <p className="text-sm text-gray-500">@{username}</p>
                 </div>

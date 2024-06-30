@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { signOut } from "next-auth/react";
 import axios from "axios";
 // Icons
@@ -26,6 +26,7 @@ const Leftbar = ({
   fetchUserPremium: Function;
   fetchTweets: Function;
 }) => {
+  const [page, setPage] = useState(null);
   const username = session.user.email.split("@")[0];
 
   const getPremium = async () => {
@@ -62,10 +63,13 @@ const Leftbar = ({
         </div>
 
         <div className="flex flex-col">
-          <div className="flex w-fit cursor-pointer items-center rounded-full px-2.5 py-2 hover:bg-[#171717]">
+          <Link
+            href="/"
+            className="flex w-fit cursor-pointer items-center rounded-full px-2.5 py-2 hover:bg-[#171717]"
+          >
             <HomeIcon sx={{ fontSize: 35 }} />
             <span className="kanit-regular px-4 text-[22px]">Home</span>
-          </div>
+          </Link>
 
           <div className="flex w-fit cursor-pointer items-center rounded-full px-2.5 py-2 font-light hover:bg-[#171717]">
             <SearchIcon sx={{ fontSize: 35 }} />
@@ -115,10 +119,13 @@ const Leftbar = ({
             <span className="px-4 text-[22px]">Premium</span>
           </div>
 
-          <div className="flex w-fit cursor-pointer items-center rounded-full px-2.5 py-2 font-light hover:bg-[#171717]">
+          <Link
+            href={`/${username}`}
+            className="flex w-fit cursor-pointer items-center rounded-full px-2.5 py-2 font-light hover:bg-[#171717]"
+          >
             <PermIdentityOutlinedIcon sx={{ fontSize: 35 }} />
             <span className="px-4 text-[22px]">Profile</span>
-          </div>
+          </Link>
 
           <div className="flex w-fit cursor-pointer items-center rounded-full px-2.5 py-2 font-light hover:bg-[#171717]">
             <MoreHorizOutlinedIcon sx={{ fontSize: 35 }} />

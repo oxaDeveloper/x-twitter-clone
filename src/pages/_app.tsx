@@ -2,12 +2,34 @@ import { GeistSans } from "geist/font/sans";
 import Head from "next/head";
 import { type AppType } from "next/app";
 import SignIn from "./signin";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Leftbar from "~/components/Leftbar";
+import RightPart from "~/components/RightPart";
+import useSession from "~/hooks/useSession";
 
 import "~/styles/globals.css";
-import useSession from "~/hooks/useSession";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const session = useSession();
+
+  const [tweets, setTweets] = useState([]);
+  const [premium, setPremium] = useState<any>(null);
+
+  const fetchTweets = async () => {
+    await axios.get("/api/tweet").then((res) => setTweets(res.data));
+  };
+
+  const fetchUserPremium = async () => {
+    await axios
+      .get(`/api/getUserPremium?userId=${session?.user.id}`)
+      .then((res) => setPremium(res.data));
+  };
+
+  useEffect(() => {
+    fetchTweets();
+    fetchUserPremium();
+  }, []);
 
   return (
     <>
@@ -24,9 +46,40 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         />
       </Head>
 
-      <main className={GeistSans.className}>
-        {session ? <Component {...pageProps} session={session} /> : <SignIn />}
-      </main>
+      {session ? (
+        <div className="flex min-h-screen px-24">
+          <div className="w-[18%]">
+            <Leftbar
+              premium={premium && premium[0]?.premium}
+              session={session}
+              fetchUserPremium={fetchUserPremium}
+              fetchTweets={fetchTweets}
+            />
+          </div>
+
+          <main
+            className={`${GeistSans.className} ml-10 mr-8 max-h-screen flex-1 overflow-y-auto border-x border-[#383838]`}
+          >
+            <Component
+              {...pageProps}
+              session={session}
+              tweets={tweets}
+              fetchTweets={fetchTweets}
+            />
+          </main>
+
+          <div className="w-[28%]">
+            <RightPart
+              premium={premium && premium[0]?.premium}
+              session={session}
+              fetchUserPremium={fetchUserPremium}
+              fetchTweets={fetchTweets}
+            />
+          </div>
+        </div>
+      ) : (
+        <SignIn />
+      )}
     </>
   );
 };
