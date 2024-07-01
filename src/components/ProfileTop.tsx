@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import Link from "next/link";
 import Image from "next/image";
 
-const ProfileTop = ({ user, posts }: { user: any; posts: any }) => {
+interface ProfileTopProps {
+  user?: any;
+  posts?: any;
+  userFound?: any;
+}
+
+const ProfileTop: FC<ProfileTopProps> = ({
+  user = { name: "Profile", premium: false },
+  posts = null,
+  userFound = true,
+}) => {
   return (
-    <div className="flex cursor-pointer items-center gap-7 border-b border-[#383838] px-2 py-1">
+    <div
+      className={`flex cursor-pointer items-center gap-7 border-b border-[#383838] ${userFound ? "px-2 py-1" : "p-2"}`}
+    >
       <Link
         href="/"
         className="rounded-full p-1.5 hover:bg-[#cacaca] hover:bg-opacity-10"
@@ -25,9 +37,11 @@ const ProfileTop = ({ user, posts }: { user: any; posts: any }) => {
             />
           )}
         </div>
-        <p className="text-xs text-gray-500">
-          {posts.length} post{posts.length !== 1 && "s"}
-        </p>
+        {userFound && (
+          <p className="text-xs text-gray-500">
+            {posts.length} post{posts.length !== 1 && "s"}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ const Profile = ({
   fetchTweets: Function;
 }) => {
   const router = useRouter();
+  const [userFound, setUserFound] = useState(false);
 
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -39,6 +40,36 @@ const Profile = ({
     fetchUsers();
     filterTweets();
   }, []);
+
+  useEffect(() => {
+    const userExists = users.some(
+      (user: any) => user.email === router.query.username + "@gmail.com",
+    );
+    setUserFound(userExists);
+  }, [users, router.query.username]);
+
+  if (!userFound) {
+    return (
+      <div>
+        <div className="relative">
+          <ProfileTop userFound={userFound} />
+          <div className="bg-[#383838] p-[100px]" />
+          <ProfileMain username={router.query.username} />
+        </div>
+
+        <div className="flex h-[30vh] flex-col items-center justify-center">
+          <div className="grid w-[22rem] gap-2">
+            <h1 className="kanit-regular text-[34px] leading-9">
+              This account doesn’t exist
+            </h1>
+            <p className="text-[15px] text-gray-500">
+              Try searching for another.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return users.map((user: any) => {
     const username = user.email.split("@")[0];
